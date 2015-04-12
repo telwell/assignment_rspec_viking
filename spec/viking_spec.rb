@@ -69,7 +69,8 @@ describe 'viking' do
 		# QUESTION: I'm unsure about these ones. Is this the best way to test?
 		# I want to just see if the damage_with_fists function was called but
 		# this seems like a roundabout way to do it.
-		expect(other_viking).to receive(:receive_attack).with(0.25 * v.strength)
+		allow(v).to receive(:damage_with_fists).and_return(2.5)
+		expect(v).to receive(:damage_with_fists)
 		v.attack(other_viking)
 	end
 
@@ -83,7 +84,8 @@ describe 'viking' do
 		# I want to just see if the damage_with_weapon function was called but
 		# this seems like a roundabout way to do it.
 		v.pick_up_weapon(Bow.new)
-		expect(other_viking).to receive(:receive_attack).with(v.strength * v.weapon.use)
+		allow(v).to receive(:damage_with_weapon).and_return(v.strength * v.weapon.use)
+		expect(v).to receive(:damage_with_weapon)
 		v.attack(other_viking)
 	end
 
@@ -100,7 +102,8 @@ describe 'viking' do
 		# I want to just see if the damage_with_fists function was called but
 		# this seems like a roundabout way to do it.
 		v.pick_up_weapon(Bow.new(0))
-		expect(other_viking).to receive(:receive_attack).with(0.25 * v.strength)
+		allow(v).to receive(:damage_with_fists).and_return(2.5)
+		expect(v).to receive(:damage_with_fists)
 		v.attack(other_viking)
 	end
 
