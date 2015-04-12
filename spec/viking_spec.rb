@@ -66,7 +66,10 @@ describe 'viking' do
 	end
 
 	it 'attacking with no weapon calls damage_with_fists' do
-		expect(:damage_with_fists)
+		# QUESTION: I'm unsure about these ones. Is this the best way to test?
+		# I want to just see if the damage_with_fists function was called but
+		# this seems like a roundabout way to do it.
+		expect(other_viking).to receive(:receive_attack).with(0.25 * v.strength)
 		v.attack(other_viking)
 	end
 
@@ -76,8 +79,11 @@ describe 'viking' do
 	end
 
 	it 'attacking with a weapon calls damage_with_weapon' do
+		# QUESTION: I'm unsure about this one too. Is this the best way to test?
+		# I want to just see if the damage_with_weapon function was called but
+		# this seems like a roundabout way to do it.
 		v.pick_up_weapon(Bow.new)
-		expect(:damage_with_weapon)
+		expect(other_viking).to receive(:receive_attack).with(v.strength * v.weapon.use)
 		v.attack(other_viking)
 	end
 
@@ -90,9 +96,11 @@ describe 'viking' do
 	end
 
 	it 'attacking with no arrows calls damage_with_fists instead' do
-		v.pick_up_weapon(Bow.new(1))
-		v.attack(other_viking)
-		expect(:damage_with_fists)
+		# QUESTION: I'm unsure about this one too. Is this the best way to test?
+		# I want to just see if the damage_with_fists function was called but
+		# this seems like a roundabout way to do it.
+		v.pick_up_weapon(Bow.new(0))
+		expect(other_viking).to receive(:receive_attack).with(0.25 * v.strength)
 		v.attack(other_viking)
 	end
 
